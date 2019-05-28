@@ -20,7 +20,16 @@ const io = SocketIO(server);//pasando el server a socket ya que necesita de un s
 
 //websockets
 io.on('connection', (socket)=> {
+       
        console.log('new connection', socket.id)//socket id te da un id diferente por cada conexion
+
+       socket.on('chat:message', (data)=>{
+              io.sockets.emit('chat:message', data );
+       });
+
+       socket.on('chat:typing', (data)=>{
+              socket.broadcast.emit('chat:typing', data);
+       });
 });
 
 
